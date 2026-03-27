@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { Suspense, useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import type { MoodType, Filters, RecommendationResult } from '@/types'
 import { MOOD_CONFIG } from '@/lib/mockData'
@@ -11,7 +11,7 @@ import { usePersonalization } from '@/context/PersonalizationContext'
 import { getSurpriseMovie } from '@/lib/recommendations'
 import { useRouter } from 'next/navigation'
 
-export default function RecommendationsPage() {
+function RecommendationsContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { history, insights } = usePersonalization()
@@ -221,5 +221,17 @@ export default function RecommendationsPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function RecommendationsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-400">Loading...</div>
+      </div>
+    }>
+      <RecommendationsContent />
+    </Suspense>
   )
 }
