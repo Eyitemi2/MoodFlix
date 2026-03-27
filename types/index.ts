@@ -58,6 +58,7 @@ export interface RecommendationRequest {
   limit?: number
   userId?: string
   includePersonalization?: boolean
+  userHistory?: UserHistory
 }
 
 export interface RecommendationResponse {
